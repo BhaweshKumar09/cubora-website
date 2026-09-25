@@ -1,0 +1,34 @@
+{
+  "products": [
+    {
+      "id": "CUB-001",
+      "name": "Aura Desk Organizer",
+      "type": "digital+physical",
+      "price_inr": 299,
+      "status": "concept"
+    },
+    {
+      "id": "CUB-002",
+      "name": "Flexi Forest Friends",
+      "type": "digital+physical",
+      "price_inr": 249,
+      "status": "concept"
+    },
+    {
+      "id": "CUB-003",
+      "name": "Moonlight Vase",
+      "type": "digital+physical",
+      "price_inr": 349,
+      "status": "concept"
+    },
+    {
+      "id": "CUB-004",
+      "name": "NameTag Mini",
+      "type": "custom-print",
+      "price_inr": 199,
+      "status": "concept"
+    }
+  ],
+  "owner": "Bhavesh Kumar",
+  "watermark": "Created by Bhavesh Kumar"
+}

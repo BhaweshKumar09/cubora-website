@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CUBORA — Har Idea Ko Teesra Aayam Do</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.179.1/build/three.module.js"}}</script>
+<style>
+body{background:#070713;color:#f7f7fb;font-family:Inter,system-ui,sans-serif}
+.glow{box-shadow:0 0 80px rgba(116,79,255,.18)}
+.card{background:linear-gradient(145deg,#121226,#0c0c19);border:1px solid #25253e}
+.gradient{background:linear-gradient(90deg,#9b5cff,#27d9ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+</style>
+</head>
+<body>
+<header class="max-w-7xl mx-auto px-5 py-5 flex items-center justify-between">
+  <div class="text-2xl font-black tracking-widest">CU<span class="gradient">BORA</span></div>
+  <nav class="hidden md:flex gap-7 text-sm text-gray-300"><a href="#shop">Shop</a><a href="#custom">Customize</a><a href="#creator">Creators</a></nav>
+  <button class="rounded-full px-5 py-2 bg-white text-black font-semibold">Cart (0)</button>
+</header>
+
+<main>
+<section class="max-w-7xl mx-auto px-5 pt-12 pb-20 grid lg:grid-cols-2 gap-10 items-center">
+ <div>
+  <p class="uppercase tracking-[.3em] text-xs text-cyan-300 mb-5">Digital + Physical 3D Marketplace</p>
+  <h1 class="text-5xl md:text-7xl font-black leading-tight">Har Idea Ko <span class="gradient">Teesra Aayam Do.</span></h1>
+  <p class="mt-6 text-lg text-gray-300 max-w-xl">Buy instant 3D files or order the finished print. Discover functional, collectible and customizable 3D creations.</p>
+  <div class="mt-8 flex gap-3 flex-wrap"><a href="#shop" class="px-6 py-3 rounded-full bg-white text-black font-bold">Explore Models</a><a href="#creator" class="px-6 py-3 rounded-full border border-white/20">Become a Creator</a></div>
+ </div>
+ <div id="viewer" class="card glow rounded-3xl min-h-[420px] relative overflow-hidden">
+   <div class="absolute top-5 left-5 z-10 text-xs text-gray-400">LIVE 3D PREVIEW</div>
+   <div class="absolute bottom-5 left-5 z-10 text-sm"><b>Cube Aura Prototype</b><br><span class="text-gray-400">Drag to rotate • Scroll to zoom</span></div>
+ </div>
+</section>
+
+<section id="shop" class="max-w-7xl mx-auto px-5 pb-20">
+ <div class="flex items-end justify-between mb-7"><div><p class="text-cyan-300 text-sm">CUBORA DROP 01</p><h2 class="text-3xl font-bold">Featured 3D Products</h2></div><span class="text-sm text-gray-500">Digital + Print-ready</span></div>
+ <div id="products" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+</section>
+
+<section id="custom" class="max-w-7xl mx-auto px-5 pb-20">
+ <div class="card rounded-3xl p-8 md:p-12 grid md:grid-cols-2 gap-8">
+  <div><p class="text-cyan-300 text-sm">CUSTOM LAB</p><h2 class="text-4xl font-bold mt-2">Your size. Your color. Your material.</h2><p class="text-gray-400 mt-4">Future-ready customization flow for CUBORA products.</p></div>
+  <div class="grid grid-cols-2 gap-3">
+   <select class="bg-black/30 border border-white/10 rounded-xl p-3"><option>PLA</option><option>PETG</option><option>Resin</option></select>
+   <select class="bg-black/30 border border-white/10 rounded-xl p-3"><option>Standard</option><option>Large</option><option>XL</option></select>
+   <input class="bg-black/30 border border-white/10 rounded-xl p-3 col-span-2" placeholder="Custom name / text">
+   <button class="col-span-2 rounded-xl bg-white text-black py-3 font-bold">Request Custom Quote</button>
+  </div>
+ </div>
+</section>
+
+<section id="creator" class="max-w-7xl mx-auto px-5 pb-20 text-center">
+ <p class="text-cyan-300 text-sm">CREATOR PROGRAM</p><h2 class="text-4xl font-bold mt-2">Upload. Sell. Earn Royalties.</h2>
+ <p class="text-gray-400 max-w-2xl mx-auto mt-4">Creator marketplace architecture is ready for the next backend phase.</p>
+</section>
+</main>
+<footer class="border-t border-white/10 py-8 text-center text-xs text-gray-500">© 2026 CUBORA • Created by Bhavesh Kumar</footer>
+
+<script type="module">
+import * as THREE from 'three';
+const host=document.querySelector('#viewer');
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0x09091a);
+const camera=new THREE.PerspectiveCamera(45,host.clientWidth/host.clientHeight,.1,100); camera.position.z=4;
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true}); renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(host.clientWidth,host.clientHeight); host.appendChild(renderer.domElement);
+const geo=new THREE.IcosahedronGeometry(1.25,1);
+const mat=new THREE.MeshStandardMaterial({color:0x8d5cff,metalness:.35,roughness:.22,wireframe:false});
+const mesh=new THREE.Mesh(geo,mat); scene.add(mesh);
+const ring=new THREE.Mesh(new THREE.TorusGeometry(1.7,.025,12,96),new THREE.MeshBasicMaterial({color:0x28dfff})); ring.rotation.x=Math.PI/2.5; scene.add(ring);
+scene.add(new THREE.AmbientLight(0xffffff,.7)); const light=new THREE.PointLight(0x8d5cff,20,10); light.position.set(2,2,3); scene.add(light);
+let down=false,lastX=0,lastY=0;
+host.addEventListener('pointerdown',e=>{down=true;lastX=e.clientX;lastY=e.clientY});
+window.addEventListener('pointerup',()=>down=false);
+window.addEventListener('pointermove',e=>{if(!down)return;mesh.rotation.y+=(e.clientX-lastX)*.01;mesh.rotation.x+=(e.clientY-lastY)*.01;lastX=e.clientX;lastY=e.clientY});
+function animate(){requestAnimationFrame(animate);mesh.rotation.y+=.003;ring.rotation.z+=.002;renderer.render(scene,camera)} animate();
+window.addEventListener('resize',()=>{camera.aspect=host.clientWidth/host.clientHeight;camera.updateProjectionMatrix();renderer.setSize(host.clientWidth,host.clientHeight)});
+</script>
+<script>
+const products=[
+["Aura Desk Organizer","Digital + Print","₹299","Modular desk organizer with clean geometric forms."],
+["Flexi Forest Friends","Digital + Print","₹249","Original articulated animal concept pack."],
+["Moonlight Vase","Digital + Print","₹349","Print-ready sculptural vase for modern interiors."],
+["NameTag Mini","Custom Print","₹199","Personalized 3D name tag for bags, desks and gifts."]
+];
+document.querySelector("#products").innerHTML=products.map(p=>`<article class="card rounded-2xl p-4"><div class="aspect-square rounded-xl bg-gradient-to-br from-violet-950 to-cyan-950 flex items-center justify-center text-6xl">◈</div><h3 class="font-bold mt-4">${p[0]}</h3><p class="text-xs text-cyan-300 mt-1">${p[1]}</p><p class="text-sm text-gray-400 mt-2">${p[3]}</p><div class="flex items-center justify-between mt-4"><b>${p[2]}</b><button class="text-sm px-3 py-2 rounded-lg bg-white text-black">View</button></div></article>`).join("");
+</script>
+</body></html>
